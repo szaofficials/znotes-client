@@ -8,7 +8,7 @@ const FeedbackForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     // Here you can send the feedback data to a server or do something else with it
@@ -16,17 +16,34 @@ const FeedbackForm = () => {
     // console.log("USN:", usn);
     // console.log("Feedback:", feedback);
 
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact", ...this.state })
-    })
-      .then(() => alert("Success!"))
-      .catch(error => alert(error));
-    // Optionally, you can clear the form fields after submission
-    setName("");
-    setUsn("");
-    setFeedback("");
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "contact",
+          usn,
+          name,
+          feedback,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      setName("");
+      setUsn("");
+      setFeedback("");
+      alert("Thank you for your valuable feedback!");
+    } catch (error) {
+      alert(error);
+    }
+
+    // // Optionally, you can clear the form fields after submission
+    // setName("");
+    // setUsn("");
+    // setFeedback("");
 
     setIsLoading(false);
     // Display a thank you message or any other feedback to the user
@@ -34,7 +51,10 @@ const FeedbackForm = () => {
   };
 
   return (
-    <form  style={formStyle}>
+    <form  style={formStyle}   method="POST"
+    data-netlify="true" 
+    onSubmit={handleSubmit}>
+       <input type="hidden" name="znotesfeedback" value="feedback" />
       <h3 style={{margin:'0'}}>Feedback:</h3>
       <p>Your opinion matters!<br/>
 Help us enhance your experience by sharing your feedback.</p>
@@ -43,8 +63,7 @@ Help us enhance your experience by sharing your feedback.</p>
         <div className="inputbox">
          
           <input
-            type="text"
-         
+            type="text" name="usn"
             value={usn}
             onChange={(e) => setUsn(e.target.value)}
            
@@ -54,8 +73,7 @@ Help us enhance your experience by sharing your feedback.</p>
         </div>
         <div className="inputbox">
           <input
-            type="text"
-            
+            type="text" name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             
@@ -68,6 +86,7 @@ Help us enhance your experience by sharing your feedback.</p>
       
         <textarea
           id="feedback"
+         name="feedback"
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
           rows="4"
@@ -82,7 +101,6 @@ Help us enhance your experience by sharing your feedback.</p>
       <div className="signup-btn-container">
         <button
           className="signup-btn-primary"
-          onClick={handleSubmit}
           disabled={isLoading}
         >
           {isLoading ? <Spinner /> : "Submit"}
