@@ -12,10 +12,17 @@ const FeedbackForm = () => {
     event.preventDefault();
     setIsLoading(true);
     // Here you can send the feedback data to a server or do something else with it
-    console.log("Name:", name);
-    console.log("USN:", usn);
-    console.log("Feedback:", feedback);
+    // console.log("Name:", name);
+    // console.log("USN:", usn);
+    // console.log("Feedback:", feedback);
 
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", ...this.state })
+    })
+      .then(() => alert("Success!"))
+      .catch(error => alert(error));
     // Optionally, you can clear the form fields after submission
     setName("");
     setUsn("");
@@ -23,7 +30,7 @@ const FeedbackForm = () => {
 
     setIsLoading(false);
     // Display a thank you message or any other feedback to the user
-    alert("Thank you for your feedback!");
+    // alert("Thank you for your feedback!");
   };
 
   return (
