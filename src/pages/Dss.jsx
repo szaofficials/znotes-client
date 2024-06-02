@@ -16,7 +16,7 @@ const Dss = () => {
   const [optionsSelected, setOptionsSelected] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const navigate = useNavigate();
-  const {API } = useAuth();
+  const { API, isLoggedIn } = useAuth();
   const { isMobile } = useDeviceSize();
 
   useEffect(() => {
@@ -39,15 +39,14 @@ const Dss = () => {
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
   };
-  
+
   const handleSchemeChange = (e) => {
     setSelectedScheme(e.target.value);
   };
-  
+
   const handleSemesterChange = (e) => {
     setSelectedSemester(e.target.value);
   };
-  
 
   const toggleLogin = () => {
     setShowLoginModal(true);
@@ -67,31 +66,49 @@ const Dss = () => {
 
   useEffect(() => {
     if (optionsSelected && !isLoggingIn) {
-      navigate(`/Home/${selectedDepartment}/${selectedScheme}/${selectedSemester}`);
+      navigate(
+        `/Home/${selectedDepartment}/${selectedScheme}/${selectedSemester}`
+      );
     }
-  }, [optionsSelected, isLoggingIn, navigate, selectedDepartment, selectedScheme, selectedSemester]);
+  }, [
+    optionsSelected,
+    isLoggingIn,
+    navigate,
+    selectedDepartment,
+    selectedScheme,
+    selectedSemester,
+  ]);
 
-  
   const handleLogin = () => {
     setIsLoggingIn(true);
-    setShowLoginModal(false); 
+    setShowLoginModal(false);
   };
+
+  if (isLoggedIn) {
+    return navigate("/Welcome");
+  }
 
   return (
     <div className="dsscontainer">
-      
       {isMobile ? (
-      <h1 className="dss-h1">Welcome to<br/>  <span style={{fontSize:'1.1em'}}> Z-Notes</span></h1>
-    ) : (
-      <h1 className="dss-h1">Welcome to Z-Notes</h1>
-    )}
+        <h1 className="dss-h1">
+          Welcome to
+          <br /> <span style={{ fontSize: "1.1em" }}> Z-Notes</span>
+        </h1>
+      ) : (
+        <h1 className="dss-h1">Welcome to Z-Notes</h1>
+      )}
       <div className="middle-container">
         <div className="middle-container-q">
-          <p style={{ margin:'5px' }}>
-            "Engineering is not being hard worker<br/> Engineering is the art of Smart Work!" 
-            </p> 
-            <div style={{ width:'100%', display:"flex", justifyContent:'right'}}>- Syed Zeeshan Patel</div>
-         
+          <p style={{ margin: "5px" }}>
+            "Engineering is not being hard worker
+            <br /> Engineering is the art of Smart Work!"
+          </p>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "right" }}
+          >
+            - Syed Zeeshan Patel
+          </div>
         </div>
         <div className="middle-container-f">
           {isLoggingIn ? (
@@ -163,7 +180,11 @@ const Dss = () => {
             </div>
           )}
         </div>
-        <div className="middle-container-q"> And you are here! <br/>Which means you are a Smart Guy </div>
+        <div className="middle-container-q">
+          {" "}
+          And you are here! <br />
+          Which means you are a Smart Guy{" "}
+        </div>
       </div>
       {showLoginModal && (
         <LoginModal onClose={handleCloseModal} onLogin={handleLogin} />

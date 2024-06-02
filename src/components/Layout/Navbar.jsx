@@ -100,7 +100,9 @@ const Navbar = () => {
         subjects={subjects}
         handleAddSubjectClick={handleAddSubjectClick}
         isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)} />}
+        onClose={() => setIsSidebarOpen(false)}
+        isLoading={isLoading} 
+        />}
       <nav className="navbar">
       {isMobile && (
           <div className="navbar-burger" onClick={toggleSidebar}>

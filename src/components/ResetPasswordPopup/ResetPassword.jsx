@@ -9,7 +9,7 @@ const ResetPassword = ({ onClose }) => {
           &times;
         </span>
         <h2>Bhool Gaye ?</h2>
-        <p>Rset password functionality is not yet developed<br/> Please ask Admin to do it for you</p>
+        <p>Reset password functionality is not yet developed<br/> Please ask Admin to do it for you</p>
       </div>
     </div>
   );

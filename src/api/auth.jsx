@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsFetching(true);
       // const response = await fetch(`${API}/api/student`, {
-      const response = await fetch(`http://localhost:5000/api/student`, {
+      const response = await fetch(`${API}/api/student`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

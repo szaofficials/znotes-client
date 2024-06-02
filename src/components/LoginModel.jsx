@@ -7,10 +7,15 @@ import Spinner from "./Spinner";
 import ResetPassword from "../components/ResetPasswordPopup/ResetPassword";
 
 const LoginModal = ({ onClose }) => {
-  const [usn, setUsn] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
+  const navigate = useNavigate();
+  const { storeTokenInLS, API } = useAuth();
+
+  const [formData, setFormData] = useState({
+    usn: "",
+    password: "",
+  });
 
   const ShowResetPassword = () => {
     setShowResetPassword(true);
@@ -20,27 +25,25 @@ const LoginModal = ({ onClose }) => {
     setShowResetPassword(false);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const updatedUsn = name === "usn" ? value.toUpperCase() : value;
+    setFormData({ ...formData, [name]: updatedUsn });
+  };
 
-
-
-  const navigate = useNavigate();
-  const { storeTokenInLS, API } = useAuth();
-
-  const handleLogin = async (e) => { 
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
 
     try {
-    
       // const response = await fetch(`http://localhost:5000/api/login`, {
       const response = await fetch(`${API}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ usn, password }),
+        body: JSON.stringify(formData),
       });
-      
 
       // Handle response based on success or failure
       console.log("Login Form");
@@ -52,9 +55,12 @@ const LoginModal = ({ onClose }) => {
         storeTokenInLS(res_data.token);
 
         toast.success("Ha Hogaya login");
-        setUsn(""); // Reset usn state
-        setPassword(""); // Reset password state
-   
+        // Clear form data
+        setFormData({
+          usn: "",
+          password: "",
+        });
+
         navigate("/Welcome");
       } else {
         toast.error("Nice try! But aap galat ho");
@@ -62,7 +68,7 @@ const LoginModal = ({ onClose }) => {
     } catch (error) {
       console.error("Error:", error);
     }
-    setLoading(false); 
+    setLoading(false);
     onClose();
   };
 
@@ -77,18 +83,20 @@ const LoginModal = ({ onClose }) => {
           <div className="input-group">
             <input
               type="text"
-        required="required"
-              value={usn}
-              onChange={(e) => setUsn(e.target.value)}
+              name="usn"
+              value={formData.usn}
+              onChange={handleInputChange}
+              required
             />
             <span>USN</span>
           </div>
           <div className="input-group">
             <input
               type="password"
-             required="required"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
             />
             <span>Password</span>
           </div>
@@ -98,11 +106,12 @@ const LoginModal = ({ onClose }) => {
         </span>
         {/* <button onClick={handleLogin}>Login</button> */}
 
-        <button onClick={handleLogin} disabled={loading}> {/* Disable button while loading */}
-          {loading ? <Spinner/> : 'Login'} {/* Show loading text if loading, otherwise Login */}
+        <button onClick={handleLogin} disabled={loading}>
+          {" "}
+          {/* Disable button while loading */}
+          {loading ? <Spinner /> : "Login"}{" "}
+          {/* Show loading text if loading, otherwise Login */}
         </button>
-
-
 
         <div className="or-divider-login">Or</div>
         <p className="l-link-text">
@@ -112,12 +121,7 @@ const LoginModal = ({ onClose }) => {
           </Link>
         </p>
       </div>
-      {showResetPassword && (
-        <ResetPassword
-        onClose={handleClosePopup}
-         
-        />
-      )}
+      {showResetPassword && <ResetPassword onClose={handleClosePopup} />}
     </div>
   );
 };
