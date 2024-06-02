@@ -1,0 +1,538 @@
+/* Dss.css */
+
+/* General Styles */
+.dsscontainer {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #292829, #529fbc);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: auto;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.dss-h1 {
+  font-size: 3em;
+  text-align: center;
+  margin: 0 0 50px 0;
+  color: #fff;
+  opacity: 0;
+  animation: slideInDown 0.5s ease-in-out 0.2s forwards;
+}
+
+.dss-h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  animation: slideInUp 1s ease-in-out 0.8s forwards;
+}
+
+.middle-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 80px;
+}
+
+.middle-container-q {
+  /* border: #ffffff solid 3px ; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  width: 420px;
+  font-size: 1.5em;
+  animation: slideInRight 0.5s ease-in-out 0.1s forwards;
+}
+
+
+
+
+
+.dssform {
+  width: 400px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-in-out 0.4s forwards;
+  opacity: 0;
+}
+
+.dss-select {
+  margin-bottom: 20px;
+}
+
+
+
+
+/* label - placeholder for selecting menues */
+.dss-select select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.dss-select span {
+  position: absolute;
+  left: 6%;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: rgb(0, 0, 0);
+  /* text-transform: uppercase; */
+  transition: 0.3s;
+}
+
+.dss-select select:valid+span,
+.dss-select select:focus+span {
+  color: rgb(0, 0, 0);
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.65em;
+  padding: 0 10px;
+  background: rgba(255, 255, 255);
+  border-left: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+  letter-spacing: 0.2em;
+}
+
+label {
+  display: none;
+}
+
+
+
+.or-divider {
+  position: relative;
+  text-align: center;
+  margin: 20px auto;
+  /* Set left and right margins to auto */
+  color: #000;
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out 1s forwards;
+}
+
+
+.or-divider:before,
+.or-divider:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: calc(45% - 45px);
+  /* Adjusted width */
+  height: 1px;
+  background-color: #ccc;
+  transition: width 0.3s ease;
+}
+
+.or-divider:before {
+  right: 50%;
+  /* Adjusted position */
+  margin-right: 25px;
+  transform: translateY(-50%);
+}
+
+.or-divider:after {
+  left: 50%;
+  /* Adjusted position */
+  margin-left: 25px;
+  transform: translateY(-50%);
+}
+
+
+
+.link-text {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out 1s forwards;
+}
+
+.link-text a {
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+.link-text a:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  width: 100%;
+  font-size: large;
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out 0.5s forwards;
+}
+
+.btn-primary:hover {
+  background-color: #787878;
+}
+
+/* Centering the button */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+
+  0% {
+    opacity: 0;
+    transform: translatex(-100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+
+
+
+
+
+
+/* CSS for login pop up  */
+/* LoginModel css */
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #f4f4f4;
+  padding: 35px;
+  border-radius: 10px;
+  width: 450px;
+  height: 450px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  display: flex;
+  font-size: 35px;
+  line-height: 14px;
+  border-top-right-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #999999;
+  transition: background-color 0.3s;
+}
+
+.close:hover {
+  color: #ffffff;
+  background-color: #ff0000;
+  /* Red background on hover */
+}
+
+.lh3 {
+  text-align: center;
+  margin: 0 0 30px 0;
+  font-size: 2em;
+  color: #000;
+  /* Adjust the text color */
+}
+
+.login-form {
+  width: 100%;
+
+}
+
+
+
+
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* label - placeholder for input fields */
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #fff;
+  color: #333;
+  margin-bottom: 0px;
+}
+
+.input-group span {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: rgb(0, 0, 0);
+  /* text-transform: uppercase; */
+  transition: 0.3s;
+}
+
+.input-group input:valid+span,
+.input-group input:focus+span {
+  color: rgb(0, 0, 0);
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.8em;
+  padding: 0 10px;
+  background: rgba(255, 255, 255);
+  border-left: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+  letter-spacing: 0.1em;
+}
+
+.forget-password {
+  align-self: flex-end;
+  text-align: right;
+  margin: 2px 5px 20px 0;
+  margin-right: 5px;
+  margin-top: 2PX;
+  margin-bottom: 20px;
+  /* Increase margin below Forget Password link */
+  text-decoration: none;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+
+.forget-password:hover {
+  color: #0056b3;
+  /* Adjust the hover color */
+}
+
+.button-group {
+  width: 100%;
+  margin-bottom: 20px;
+  /* Increase margin above buttons */
+}
+
+button {
+  width: calc(100% - 10px);
+  padding: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+.or-divider-login {
+  text-align: center;
+  margin: 30px 0 15px 0;
+  /* Increase margin above and below divider */
+  color: #000;
+  /* Adjust the text color */
+  position: relative;
+
+  width: calc(50% - 45px);
+  /* Adjusted width */
+}
+
+.or-divider-login:before,
+.or-divider-login:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: #ccc;
+  /* Adjust the color of the divider */
+}
+
+.or-divider-login:before {
+  right: 60%;
+  /* Position the left side of the divider */
+  margin-right: 10px;
+  /* Adjust spacing between the divider and text */
+}
+
+.or-divider-login:after {
+  left: 60%;
+  /* Position the right side of the divider */
+  margin-left: 10px;
+  /* Adjust spacing between the divider and text */
+}
+
+
+.l-link-text {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.l-link-text a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.l-link-text a:hover {
+  color: #0056b3;
+}
+
+
+
+
+
+
+
+/* Media query for tablets and small laptops
+@media (min-width: 768px) and (max-width: 991px) {
+
+  Adjust styles for smaller screens
+
+} */
+
+
+@media (max-width: 768px) {
+
+
+  .middle-container-q {
+    display: none;
+  }
+
+  .middle-container-f {
+    display: flex;
+    justify-content: center;
+
+  }
+
+
+  .dsscontainer {
+    display: flex;
+    gap: 20px
+  }
+
+  .dss-h1 {
+    font-size: 2.5em;
+    margin: 10px;
+  }
+
+  .dssform {
+
+    max-width: 300px;
+    width: 90%;
+    padding: 20px;
+    margin-bottom: 20px;
+
+  }
+
+  .dss-select select:valid+span,
+  .dss-select select:focus+span {
+    color: rgb(0, 0, 0);
+    transform: translateX(10px) translateY(-7px);
+    font-size: 0.85em;
+    padding: 0 10px;
+    background: rgba(255, 255, 255);
+    border-left: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid rgb(0, 0, 0);
+    letter-spacing: 0.1em;
+  }
+
+
+
+
+
+}

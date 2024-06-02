@@ -1,0 +1,85 @@
+.input-container {
+  position: relative;
+}
+
+.input-container input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  display: none;
+}
+
+
+.choosePdf {
+  width: 98%;
+  height: 40px;
+  display: flex;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  align-items: center;
+}
+
+
+.choosePdf .upload-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  cursor: pointer;
+  min-width: 25%;
+
+}
+
+.choosePdf .upload-label:hover {
+  background-color: #0056b3;
+}
+
+
+
+.inputClear {
+  position: absolute;
+  right: 12px;
+  width: 20px;
+  height: 22px;
+  padding: 5px;
+  display: flex;
+  font-size: 35px;
+  line-height: 14px;
+  background-color: rgb(255, 255, 255);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #999999;
+  transition: background-color 0.3s;
+}
+
+.inputClear:hover {
+  color: #ffffff;
+  background-color: #ff0000;
+  /* Red background on hover */
+}
+
+.addPdfBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.addPdfBtn button {
+padding: 10px;
+  width: 40%;
+}
+
+.upload-icon {
+  margin-right: 12px;
+  font-size: 18px;
+}

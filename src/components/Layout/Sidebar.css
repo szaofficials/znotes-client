@@ -1,0 +1,89 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -200px; /* Initially hidden */
+    width: 200px;
+    height: 100%;
+    background-color: #333; /* Match page header and footer color */
+    color: #fff; /* Text color */
+    transition: left 0.3s ease; /* Smooth slide animation */
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .sidebar.open {
+    left: 0; /* Slide in when open */
+  }
+  
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px ;
+    padding-left: 30px;
+    border-bottom: 1px solid #555;
+  }
+  
+  .sidebar-title {
+    font-size: 24px;
+  }
+  
+  .sidebar-close {
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  
+  .sidebar-nav-list {
+    padding: 20px;
+    padding-left: 30px;
+    list-style: none;
+    
+  }
+  
+  .sidebar-nav-item {
+    border-bottom: 1px solid #555;
+  }
+  
+  .sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    color: #fff; /* Text color */
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+
+  }
+  
+  .sidebar-nav-link:hover {
+    color: #fff;
+    background-color: #555;
+    border-radius: 5px;
+  }
+  
+  .sidebar-nav-link span {
+    margin-left: 10px;
+  }
+  
+  .sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .sidebar-footer button {
+    padding: 10px 20px;
+    background-color: #e7e7e7; /* Match page footer color */
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  
+  .sidebar-footer button:hover {
+    background-color: #666666; /* Darker shade of footer color */
+  }
+  
