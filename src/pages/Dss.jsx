@@ -93,10 +93,10 @@ const Dss = () => {
       {isMobile ? (
         <h1 className="dss-h1">
           Welcome to
-          <br /> <span style={{ fontSize: "1.1em" }}> Z-Notes</span>
+          <br /> <span style={{ fontSize: "1.1em" }}> Z-Notes.in</span>
         </h1>
       ) : (
-        <h1 className="dss-h1">Welcome to Z-Notes</h1>
+        <h1 className="dss-h1">Welcome to Z-Notes.in</h1>
       )}
       <div className="middle-container">
         <div className="middle-container-q">

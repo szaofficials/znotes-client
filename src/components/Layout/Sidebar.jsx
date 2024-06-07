@@ -18,7 +18,7 @@ const Sidebar = ({
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="sidebar-header">
-        <div className="sidebar-title">Z-Notes</div>
+        <div className="sidebar-title">Z-Notes.in</div>
         <div className="sidebar-close" onClick={onClose}>
           &times;
         </div>

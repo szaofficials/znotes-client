@@ -1,37 +1,88 @@
 import React from "react";
-import { useAuth } from "../api/auth";
 
-const Avatar = ({
-  children,
-  px,
-  py,
-  color,
-  borderRadius,
-  fontSize,
-  cursor,
-  border
-}) => {
-  const { user } = useAuth();
-  // Generate a unique color based on the user ID
-  const userColor = `#${user.name ? user.name.slice(0, 6) : '000000'}`; // Take the first 6 characters of the user ID and prepend "#"
+const Avatar = ({ userId, size, borderRadius, children }) => {
+  const generateColor = (str) => {
+    return "#" + Math.floor(Math.abs(Math.sin(parseInt(str, 36)) * 16777215) % 16777215).toString(16);
+  };
 
   const style = {
-    backgroundColor:userColor, // Use the provided color or the generated user color
-    padding: `${py} ${px}`,
-    color: "white", // Always use white text for better contrast
+    backgroundColor: generateColor(userId),
+    width: size,
+    height: size,
     borderRadius,
-    fontSize,
-    textAlign: "center",
-    cursor,
-    textDecoration: "none",
-    border:"0.5px solid black"
-   
+    border:'1px solid black',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white",
   };
 
   return <div style={style}>{children}</div>;
 };
 
 export default Avatar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const Avatar = ({
+//   children,
+//   px,
+//   py,
+//   color,
+//   borderRadius,
+//   fontSize,
+//   cursor,
+//   border
+// }) => {
+//   // Function to generate a hash code from a string (user ID)
+//   const hashCode = (str) => {
+//     let hash = 0;
+//     for (let i = 0; i < str.length; i++) {
+//       hash = str.charCodeAt(i) + ((hash << 12) - hash);
+//     }
+//     return hash & 0xffffff; // Convert the hash to a 6-digit hexadecimal color
+//   };
+
+//   const { user } = useAuth();
+
+//   // Generate a unique color based on the user's unique identifier (like user ID or email)
+//   const userId = user._id; 
+//   const userColor = `#${hashCode(userId)}`; 
+//   const style = {
+//     backgroundColor: userColor,
+//     padding: `${py} ${px}`,
+//     color: "white", // Always use white text for better contrast
+//     borderRadius,
+//     fontSize,
+//     textAlign: "center",
+//     cursor,
+//     textDecoration: "none",
+//     border: "0.5px solid black"
+//   };
+
+//   return <div style={style}>{children}</div>;
+// };
+
+// export default Avatar;
 
 
 

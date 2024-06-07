@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../api/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useDeviceSize } from "../../Context/DeviceSizeContext";
+
 
 const Welcome = () => {
     const navigate = useNavigate();
     const { user, isFetching } = useAuth();
     const [showWelcome, setShowWelcome] = useState(false);
+    const { isMobile } = useDeviceSize();
 
     useEffect(() => {
       // Show the welcome message immediately
@@ -18,7 +21,7 @@ const Welcome = () => {
           if (!isFetching) {
               navigate(`/Home/${user.department.deptId}/${user.scheme.scheme}/${user.semester.semName}`);
           }
-      }, 2200); // Adjust the delay time as needed
+      }, 1500); // Adjust the delay time as needed
 
       // Cleanup function
       return () => clearTimeout(timeout);
@@ -31,15 +34,16 @@ const Welcome = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        backgroundColor: '#f5f5f5'
+        backgroundColor: '#f5f5f5',
+       
     };
 
    
     const headingStyle = {
-     
-        fontSize: '2rem',
+        fontSize: isMobile ? '1.5rem' : '2rem',
         marginBottom: '20px',
-        marginLeft: '20px',
+        marginLeft: '10px',
+        marginRight: '10px',
         color: '#333'
     };
 
@@ -47,8 +51,8 @@ const Welcome = () => {
         <div className='welcomePage'> 
             { showWelcome && ( // Show loading indicator if fetching is in progress
                 <div style={faspinnerContainerStyle}>
-                    <FontAwesomeIcon icon={faSpinner} className="fa-spin" size="3x" />
-                    <h1 style={headingStyle}>Welcome to Z-Notes <br/> Your Engineering Companion for Success!</h1>
+                    <FontAwesomeIcon icon={faSpinner} className="fa-spin" size="3x" style={{ marginLeft:'20px'}} />
+                    <h1 style={headingStyle}>Welcome to Z-Notes.in <br/> Your Engineering Companion for Success!</h1>
                 </div>
           
                 

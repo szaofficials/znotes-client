@@ -4,7 +4,7 @@ import React from 'react';
 const Footer = () => {
     return (
       <footer style={footerStyle}>
-        <p style={{margin:'0'}}>&copy; {new Date().getFullYear()} <b>Z - Notes </b> All rights reserved.</p>
+        <p style={{margin:'0'}}>&copy; {new Date().getFullYear()} <b>Z - Notes.in </b> All rights reserved.</p>
       </footer>
     );
 };

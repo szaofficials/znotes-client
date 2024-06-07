@@ -31,6 +31,7 @@
    font-size: 28px;
    font-weight: bold;
    margin-bottom: 20px;
+   margin-left: 10px;
    display: flex;
    align-items: center;
    justify-content: space-between;
@@ -160,9 +161,11 @@ justify-content: space-evenly;
    .subjectContainer {
       padding: 5px; /* Adjusted for mobile */
     }
+
+  
   
     .subject-title {
-      font-size: 20px; 
+      font-size: 18px; 
       margin-bottom: 15px; 
     }
   
@@ -171,14 +174,23 @@ justify-content: space-evenly;
       max-width: 100%; /* Adjusted for mobile */
     }
   
+
+    .sectionTitle{
+      font-size: 16px;
+   }
+
     .edOptions{
       font-size: 16px;
     }
 
-    .pdf-viewer iframe {
-      height: 150px; /* Adjusted for mobile */
-    }
-  
+
+    .pdf-item {
+      margin-left:10px ;
+      margin-right: 10px;
+      height: 380px;
+   }
+
+   
     .pdf-container {
       grid-template-columns: repeat(1, 1fr); /* Adjusted for mobile */
     }

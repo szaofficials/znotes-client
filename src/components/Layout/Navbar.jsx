@@ -109,7 +109,7 @@ const Navbar = () => {
             <FaBars />
           </div>
         )}
-        {isMobile && <div className="navbar-title">Z-Notes</div>}
+        {isMobile && <><div className="navbar-title">Z-Notes.in</div> {!isLoggedIn&& <div style={{width:'10px',height:'10px'}}></div>}</> }
         {!isMobile && (
         <ul className="navbar-nav">
           <li className="nav-item">
@@ -156,15 +156,9 @@ const Navbar = () => {
 
         {isLoggedIn && (
           <div className="avatar-container" onClick={handleAvatarClick}>
-            <Avatar
-              width="10px"
-              px="12px"
-              py="5px"
-              borderRadius="50%"
-              color="white"
-            >
-              {user.name ? user.name.charAt(0).toUpperCase() : ""}
-            </Avatar>
+           <Avatar userId={user._id} size="35px" borderRadius="50%">
+        {user.name ? user.name.charAt(0).toUpperCase() : ""}
+      </Avatar>
             {isDropdownOpen && (
               <div className="dropdown-menu">
                 <button

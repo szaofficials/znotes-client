@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SignUp.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../api/auth";
@@ -22,14 +22,41 @@ const SignUp = () => {
     department: "",
     semester: "",
     scheme: "",
+    batch: "",
     // studentExists: false,
   });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const updatedUsn = name === "usn" ? value.toUpperCase() : value;
     setFormData({ ...formData, [name]: updatedUsn });
   };
 
+  useEffect(() => {
+    // Calculate and set the initial value of scheme when batch changes
+    if (formData.batch) {
+      const calculatedScheme = calculateScheme(formData.batch);
+      setFormData((prevData) => ({ ...prevData, scheme: calculatedScheme }));
+    }
+  }, [formData.batch]);
+
+  const calculateScheme = (batch) => {
+    // Define your logic to calculate scheme based on batch here
+    switch (batch) {
+      case "2021":
+        return "2021";
+      case "2022":
+        return "2022";
+      case "2023":
+        return "2022";
+      case "2024":
+        return "2024";
+      case "2025":
+        return "2025";
+      default:
+        return ""; 
+    }
+  };
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -113,7 +140,7 @@ const SignUp = () => {
               <input
                 type="text"
                 name="name"
-                required="required"
+                required
                 value={formData.name}
                 onChange={handleInputChange}
               />
@@ -124,7 +151,7 @@ const SignUp = () => {
               <input
                 type="text"
                 name="usn"
-                required="required"
+                required
                 value={formData.usn}
                 onChange={handleInputChange}
                 maxLength={10}
@@ -138,7 +165,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   name="contact"
-                  required="required"
+                  required
                   value={formData.contact}
                   onChange={handleInputChange}
                 />
@@ -149,7 +176,7 @@ const SignUp = () => {
                 <input
                   type="email"
                   name="email"
-                  required="required"
+                  required
                   value={formData.email}
                   onChange={handleInputChange}
                 />
@@ -161,7 +188,7 @@ const SignUp = () => {
               <div className="inputbox">
                 <select
                   name="gender"
-                  required="required"
+                  required
                   value={formData.gender}
                   onChange={handleInputChange}
                 >
@@ -177,7 +204,7 @@ const SignUp = () => {
                 <input
                   type="date"
                   name="dob"
-                  required="required"
+                  required
                   value={formData.dob}
                   onChange={handleInputChange}
                 />
@@ -186,8 +213,6 @@ const SignUp = () => {
                   style={{
                     backgroundColor: "white",
                     margin: "2px",
-                    fontFamily:
-                      "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
                   }}
                 >
                   Date of Birth
@@ -197,11 +222,21 @@ const SignUp = () => {
 
             <div className="form-group">
               <div className="inputbox">
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+                <span>Password </span>
+              </div>
+              <div className="inputbox">
                 <select
                   name="department"
                   value={formData.department}
                   onChange={handleInputChange}
-                  required="required"
+                  required
                 >
                   <option value=""></option>
                   <option value="CSE">CSE</option>
@@ -212,13 +247,46 @@ const SignUp = () => {
                 </select>
                 <span>Select Department</span>
               </div>
-
-              <div className="inputbox">
+            </div>
+            <div className="form-group">
+            <div className="inputbox" style={{width:'33%'}}>
+                <select
+                  name="batch"
+                  value={formData.batch}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value=""></option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+                <span>Select Batch</span>
+              </div>
+              <div className="inputbox" style={{width:'33%'}}>
+                <select
+                  name="scheme"
+                  value={formData.scheme}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value=""></option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+                <span>Select Scheme</span>
+              </div>
+              <div className="inputbox" style={{width:'33%'}}>
                 <select
                   name="semester"
                   value={formData.semester}
                   onChange={handleInputChange}
-                  required="required"
+                  required
                 >
                   <option value=""></option>
                   <option value="1">1st Sem</option>
@@ -233,39 +301,11 @@ const SignUp = () => {
                 <span>Select Semester</span>
               </div>
             </div>
-            <div className="form-group">
-              <div className="inputbox">
-                <select
-                  name="scheme"
-                  value={formData.scheme}
-                  onChange={handleInputChange}
-                  required="required"
-                >
-                  <option value=""></option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                </select>
-                <span>Select Scheme</span>
-              </div>
-
-              <div className="inputbox">
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                />
-                <span>Password </span>
-              </div>
-            </div>
           </div>
-          <div className="signup-btn-container">
+          <div className="signup-btn-container" >
             <button
               className="signup-btn-primary"
+              style={{marginLeft:'0'}}
               onClick={handleSignUp}
               disabled={isLoading}
             >

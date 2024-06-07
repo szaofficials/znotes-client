@@ -3,7 +3,7 @@ import './Preloader.css'; // Import your CSS file
 
 const Preloader = () => {
   const [typedText, setTypedText] = useState('');
-  const textToType = 'Z-Notes...'; // Text to be typed
+  const textToType = 'Z-Notes.in...'; // Text to be typed
   const typingSpeed = 200; // Typing speed (adjust as needed)
 
   useEffect(() => {

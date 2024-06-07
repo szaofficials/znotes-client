@@ -5,7 +5,7 @@ import Avatar from "../../components/Avatar";
 import Preloader from "../../components/Preloader/Preloader";
 
 const UserProfile = () => {
-  const { user,isFetching } = useAuth();
+  const { user, isFetching } = useAuth();
 
   if (isFetching) {
     return <Preloader />;
@@ -15,53 +15,56 @@ const UserProfile = () => {
     <div className="main-container">
       <div className="profile-container">
         <div className="avatar">
-          <Avatar
-           width="10px"
-            px="12px"
-            py="8px"
-            borderRadius="50%"
-            color="white"
-          >
+          <Avatar userId={user._id} size="80px" borderRadius="50%">
             {user.name ? user.name.charAt(0).toUpperCase() : ""}
           </Avatar>
         </div>
 
         <div className="profile-heading">
-          <h2 style={{ color:"black"}}>{user.name}</h2>
+          <h2 style={{ color: "black", margin:"0" }}>{user.name}</h2>
+        <p>Role: {user.isAdmin ? "Admin" : "Student"}</p>
         </div>
         <div className="profile-details">
-          <div className="profile-col-1">
-          <p>
-              <strong>USN:</strong> {user.usn}
-            </p>
-            <p>
-              <strong>Email:</strong>{" "} {user.email}
-            </p>
-            <p>
-              <strong>Mobile No.:</strong> {user.contact}
-            </p>
-           
-            <p>
-              <strong>Department:</strong> {user.department.deptId}
-            </p>
-          </div>
-          <div className="profile-col-2">
-           <p>
-              <strong>Gender:</strong> {user.gender}
-            </p>
-            <p>
-              <strong>Date of Birth:</strong> {" "} 
-              {new Date(user.dob).toLocaleDateString('en-GB')}
-             
-            </p> 
-           
-            <p>
-              <strong>Semester:</strong> {user.semester.semName}
-            </p>
-            <p>
-              <strong>Scheme:</strong> {user.scheme.scheme}
-            </p>
-          </div>
+        <table className="profile-table">
+            <tbody>
+              <tr>
+                <td><strong>USN:</strong></td>
+                <td>{user.usn}</td>
+              </tr>
+              <tr>
+                <td><strong>Email:</strong></td>
+                <td>{user.email}</td>
+              </tr>
+              <tr>
+                <td><strong>Mobile No.:</strong></td>
+                <td>{user.contact}</td>
+              </tr>
+               <tr>
+                <td><strong>Gender:</strong></td>
+                <td>{user.gender}</td>
+              </tr>
+              <tr>
+                <td><strong>DOB:</strong></td>
+                <td>{new Date(user.dob).toLocaleDateString("en-GB")}</td>
+              </tr>
+              <tr>
+                <td><strong>Department:</strong></td>
+                <td>{user.department.deptId}</td>
+              </tr>
+              <tr>
+                <td><strong>Batch:</strong></td>
+                <td>{user.batch.batch}</td>
+              </tr>
+              <tr>
+                <td><strong>Semester:</strong></td>
+                <td>{user.semester.semName}</td>
+              </tr>
+              <tr>
+                <td><strong>Scheme:</strong></td>
+                <td>{user.scheme.scheme}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@
   animation: fadeIn 0.3s ease-in-out forwards;
 }
 
-.signup-h2{
+.signup-h2 {
   color: white;
   font-size: 2em;
 }
@@ -105,8 +105,10 @@
     width: 100%;
     /* Use full width */
   }
-.signup-h2{
- font-size: 1.5em;}
+
+  .signup-h2 {
+    font-size: 1.5em;
+  }
 
   .form-container h1 {
     font-size: 27px;
@@ -125,5 +127,3 @@
   }
 
 }
-
-

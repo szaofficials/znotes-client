@@ -375,7 +375,7 @@ const SubjectPage = () => {
                       </AdminOnly>
                     </div>
                     <div className="sectionDesc">
-                      <p>{section.sectionDesc}</p>
+                      <p style={{ margin: "0 0 8px 0" }}>{section.sectionDesc}</p>
                     </div>
                     <div className="pdf-container">
                       {/* Render PDFs if available for the section */}

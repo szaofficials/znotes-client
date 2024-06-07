@@ -16,6 +16,8 @@ const Student = ({ student }) => {
       <td>{student.password}</td>
       <td>{student.scheme.scheme}</td>
       <td>{new Date(student.registeredAt).toLocaleString()}</td>
+      {/* <td>{String(student.isAdmin)}</td> */}
+
     </tr>
   );
 };
@@ -79,6 +81,7 @@ const StudentsList = () => {
             <th>Password</th>
             <th>Scheme</th>
             <th>Registered At</th>
+            {/* <th>isAdmin</th> */}
           </tr>
         </thead>
         <tbody>
