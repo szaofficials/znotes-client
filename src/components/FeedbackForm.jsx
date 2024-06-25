@@ -1,31 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
 
-const FeedbackForm = () => {
+const FeedbackForm = ({ user }) => {
   const [name, setName] = useState("");
   const [usn, setUsn] = useState("");
   const [feedback, setFeedback] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setUsn(user.usn);
+    }
+  }, [user]);
+
+
+  const encode = (data) => {
+    return Object.keys(data)
+      .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    // Here you can send the feedback data to a server or do something else with it
-    // console.log("Name:", name);
-    // console.log("USN:", usn);
-    // console.log("Feedback:", feedback);
+
+    const formData = {
+      "form-name": "feedback",
+      usn,
+      name,
+      feedback,
+    };
 
     try {
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": "contact",
-          usn,
-          name,
-          feedback,
-        }),
+        body: encode(formData),
       });
 
       if (!response.ok) {
@@ -40,77 +51,75 @@ const FeedbackForm = () => {
       alert(error);
     }
 
-    // // Optionally, you can clear the form fields after submission
-    // setName("");
-    // setUsn("");
-    // setFeedback("");
-
     setIsLoading(false);
-    // Display a thank you message or any other feedback to the user
-    // alert("Thank you for your feedback!");
   };
-
   return (
-    <form  style={formStyle}   method="POST"
-    data-netlify="true" 
-    onSubmit={handleSubmit}>
-       <input type="hidden" name="znotesfeedback" value="feedback" />
-      <h3 style={{margin:'0'}}>Feedback:</h3>
-      <p>Your opinion matters!<br/>
-Help us enhance your experience by sharing your feedback.</p>
-     
-      <div className="form-group">
-        <div className="inputbox">
-         
-          <input
-            type="text" name="usn"
-            value={usn}
-            onChange={(e) => setUsn(e.target.value)}
-           
-            required
-          />
-          <span>USN</span>
+    <>
+      <form
+        style={formStyle}
+        method="POST"
+        name="feedback"
+        data-netlify="true"
+        onSubmit={handleSubmit}
+      >
+        <input type="hidden" name="form-name" value="feedback" />
+        <h3 style={{ margin: "0" }}>Feedback:</h3>
+        <p>
+          Your opinion matters!
+          <br />
+          Help us enhance your experience by sharing your feedback.
+        </p>
+
+        <div className="form-group">
+          <div className="inputbox">
+            <input
+              type="text"
+              name="usn"
+              value={usn}
+              onChange={(e) => setUsn(e.target.value)}
+              required
+              disabled
+            />
+            <span  style={spanStyle}>USN</span>
+          </div>
+          <div className="inputbox">
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              disabled
+            />
+            <span  style={spanStyle}>Name</span>
+          </div>
         </div>
-        <div className="inputbox">
-          <input
-            type="text" name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            
-            required
-          />
-          <span>Name</span>
-        </div>
-      </div>
-     
-      
+
         <textarea
           id="feedback"
-         name="feedback"
+          name="feedback"
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
           rows="4"
           placeholder="Your Message"
           style={textareaStyle}
           required
-          
         />
-        
-    
 
-      <div className="signup-btn-container">
-        <button
-          className="signup-btn-primary"
-          disabled={isLoading}
-        >
-          {isLoading ? <Spinner /> : "Submit"}
-        </button>
-      </div>
-
-     
-    </form>
+        <div className="signup-btn-container">
+          <button
+            type="submit"
+            className="signup-btn-primary"
+            disabled={isLoading}
+          >
+            {isLoading ? <Spinner /> : "Submit"}
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
+
 
 // CSS Styles
 const formStyle = {
@@ -122,6 +131,17 @@ const formStyle = {
   backgroundColor: "#f9f9f9",
 };
 
+const spanStyle = {
+  color: "rgb(0, 0, 0)",
+  transform: "translateX(10px) translateY(-7px)",
+  fontSize:" 0.8em",
+  padding: "0 8px",
+  background: "rgba(255, 255, 255)",
+  borderLeft: "1px solid rgb(0, 0, 0, 0.5)",
+  borderRight: "1px solid rgb(0, 0, 0, 0.5)",
+  letterSpacing:" 0.1em",
+};
+
 
 const textareaStyle = {
   width: "98%",
@@ -131,6 +151,5 @@ const textareaStyle = {
   borderRadius: "5px",
   boxSizing: "border-box",
 };
-
 
 export { FeedbackForm };

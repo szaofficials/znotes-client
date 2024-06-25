@@ -133,7 +133,7 @@ const Home = () => {
                   </div>
                 </section>
                 <section className="subSection">
-                  <FeedbackForm />
+                <FeedbackForm user={user} />
                 </section>
                 <section id="about-us" className="subSection">
                   <h2>About Us</h2>
