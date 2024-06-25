@@ -50,6 +50,9 @@ const AddPdfPopup = ({ onClose, subjectDetails, onAddPdf, sectionId }) => {
     formData.append("subCode", subjectDetails.subCode);
     formData.append("addedBy", user._id);
     formData.append("addedByName", user.name);
+    formData.append("deptId", subjectDetails.department.deptId);
+    formData.append("schemeId", subjectDetails.scheme.schemeId);
+    formData.append("semNum", subjectDetails.semester.semNum);
     try {
       const response = await fetch(
         `${API}/api/addPdfToSection/${sectionId}/addPdf`,
@@ -73,10 +76,10 @@ const AddPdfPopup = ({ onClose, subjectDetails, onAddPdf, sectionId }) => {
           text: successMessage,
         });
 
-        toast.success(successMessage)
-        // onAddPdf(newPdf.pdf);
+        toast.success(successMessage);
+        onAddPdf(newPdf.pdf);
 
-        onAddPdf();
+        // onAddPdf();
 
         onClose();
       } else {
@@ -159,10 +162,16 @@ const AddPdfPopup = ({ onClose, subjectDetails, onAddPdf, sectionId }) => {
               </span>
             </div>
           </div>
-          
+
           <div className="addPdfBtn">
             <button type="submit">
-            {isLoading ? <Spinner /> : <><FaUpload className="upload-icon" /> Upload PDF</>}
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <FaUpload className="upload-icon" /> Upload PDF
+                </>
+              )}
             </button>
           </div>
         </form>

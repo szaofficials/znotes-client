@@ -45,6 +45,68 @@
   margin-bottom: 5px;
 }
 
+
+
+
+
+
+
+
+/* Responsible Persons Section */
+.responsible-persons {
+  margin-top: 10px;
+  border-top: 2px solid #929292;
+  /* Added top border for separation */
+
+}
+
+.responsible-list {
+  list-style-type: none;
+  padding: 0 0 0 7%;
+  margin: 0;
+}
+
+
+
+.responsible-list li {
+  margin: 8px auto;
+  font-size: 16px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #b6b6b6;
+}
+
+
+
+.view-all-btn {
+  padding: 10px;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background-color: #d4d4d4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 435px) {
   /* For smaller devices like mobile phones */
 
@@ -67,6 +129,30 @@
   #contact p {
     font-size: 16px;
   }
+  .responsible-list li {
+    margin: 10px auto;
+
+  }
+  
+
+}
+
+
+
+@media only screen and (min-width: 435px) {
+  /* For bigger like laptop */
+
+  .responsible-list {
+    width: 20%;
+    padding: 0 0 0 2%;
+  }
+
 
 
 }
+
+
+
+
+
+

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dss.css";
-import LoginModal from "../components/LoginModel";
-import { useDeviceSize } from "../Context/DeviceSizeContext";
-import { useAuth } from "../api/auth";
+import LoginModal from "../../components/LoginModel";
+import { useDeviceSize } from "../../Context/DeviceSizeContext";
+import { useAuth } from "../../api/auth";
+import Spinner from "../../components/Spinner";
 
 const Dss = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -18,16 +19,18 @@ const Dss = () => {
   const navigate = useNavigate();
   const { API, isLoggedIn } = useAuth();
   const { isMobile } = useDeviceSize();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Fetch departments, schemes, and semesters data
     const fetchData = async () => {
       try {
-        const response = await fetch(`${API}/api/dss`);
+        const response = await fetch(`${API}/api/cdss`);
         const data = await response.json();
-        setDepartments(data.dssData.departments);
-        setSchemes(data.dssData.schemes);
-        setSemesters(data.dssData.semesters);
+        setDepartments(data.dssData.department);
+        setSchemes(data.dssData.scheme);
+        setSemesters(data.dssData.semester);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -119,58 +122,64 @@ const Dss = () => {
           ) : (
             <div className="dssform">
               <h3>Select Scheme, Dept & Sem : </h3>
-              <div className="dss-select">
-                <label htmlFor="schemeSelect">Select Scheme:</label>
-                <select
-                  id="schemeSelect"
-                  required="required"
-                  value={selectedScheme}
-                  onChange={handleSchemeChange}
-                >
-                  <option value=""></option>
-                  {schemes.map((scheme, index) => (
-                    <option key={index} value={scheme.scheme}>
-                      {scheme.scheme}
-                    </option>
-                  ))}
-                </select>
-                <span>Scheme</span>
-              </div>
+              {isLoading ? (
+                <Spinner />
+              ) : (<><div style={{height:'80px'}}></div></>
+                // <>
+                //   <div className="dss-select">
+                //     <label htmlFor="schemeSelect">Select Scheme:</label>
+                //     <select
+                //       id="schemeSelect"
+                //       required="required"
+                //       value={selectedScheme}
+                //       onChange={handleSchemeChange}
+                //     >
+                //       <option value=""></option>
+                //       {schemes.map((scheme, index) => (
+                //         <option key={index} value={scheme.scheme}>
+                //           {scheme.scheme}
+                //         </option>
+                //       ))}
+                //     </select>
+                //     <span>Scheme</span>
+                //   </div>
 
-              <div className="dss-select">
-                <label htmlFor="departmentSelect">Select Department:</label>
-                <select
-                  id="departmentSelect"
-                  required="required"
-                  value={selectedDepartment}
-                  onChange={handleDepartmentChange}
-                >
-                  <option value=""></option>
-                  {departments.map((department, index) => (
-                    <option key={index} value={department.deptId}>
-                      {department.deptId}
-                    </option>
-                  ))}
-                </select>
-                <span>Department</span>
-              </div>
-              <div className="dss-select">
-                <label htmlFor="semesterSelect">Select Semester:</label>
-                <select
-                  id="semesterSelect"
-                  required="required"
-                  value={selectedSemester}
-                  onChange={handleSemesterChange}
-                >
-                  <option value=""></option>
-                  {semesters.map((semester, index) => (
-                    <option key={index} value={semester.semName}>
-                      {semester.semName}
-                    </option>
-                  ))}
-                </select>
-                <span>Semester</span>
-              </div>
+                //   <div className="dss-select">
+                //     <label htmlFor="departmentSelect">Select Department:</label>
+                //     <select
+                //       id="departmentSelect"
+                //       required="required"
+                //       value={selectedDepartment}
+                //       onChange={handleDepartmentChange}
+                //     >
+                //       <option value=""></option>
+                //       {departments.map((department, index) => (
+                //         <option key={index} value={department.deptId}>
+                //           {department.deptId}
+                //         </option>
+                //       ))}
+                //     </select>
+                //     <span>Department</span>
+                //   </div>
+                //   <div className="dss-select">
+                //     <label htmlFor="semesterSelect">Select Semester:</label>
+                //     <select
+                //       id="semesterSelect"
+                //       required="required"
+                //       value={selectedSemester}
+                //       onChange={handleSemesterChange}
+                //     >
+                //       <option value=""></option>
+                //       {semesters.map((semester, index) => (
+                //         <option key={index} value={semester.semName}>
+                //           {semester.semName}
+                //         </option>
+                //       ))}
+                //     </select>
+                //     <span>Semester</span>
+                //   </div>
+                // </>
+              )}
               <div className="or-divider">Or</div>
               <div className="btn-container">
                 <button className="btn-primary" onClick={toggleLogin}>

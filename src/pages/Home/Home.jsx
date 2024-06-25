@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 // import { useDeviceSize } from "../Context/DeviceSizeContext";
-import { useAuth } from "../api/auth";
+import { useAuth } from "../../api/auth";
 import "./Home.css";
-import Preloader from "../components/Preloader/Preloader";
-import Layout from "../components/Layout/Layout";
-import { FeedbackForm } from "../components/FeedbackForm";
+import Preloader from "../../components/Preloader/Preloader";
+import Layout from "../../components/Layout/Layout";
+import { FeedbackForm } from "../../components/FeedbackForm";
+import { useDeviceSize } from "../../Context/DeviceSizeContext";
 
 const Home = () => {
   const { department, scheme, semester } = useParams();
@@ -13,6 +14,31 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn, user } = useAuth();
   const [userData, setUserData] = useState(null);
+  const { isMobile } = useDeviceSize();
+  const [visibleCount, setVisibleCount] = useState(2);
+
+  const responsiblePersons = [
+    "Basavakiran Bandi (CSE)",
+    "Kaneez Fatima (CSE)",
+    "Hasan (CSE)",
+    "Mohd Idris (Civil)",
+    "Nageshwari Patil (ECE)",
+    "Shruti Shetty (EEE)",
+    "Sukanya Bhushetty (CSE)",
+    "Tauz ul Imam (CSE)",
+    "Syed Arifuddin (EEE)",
+    "Eshwari Allur(EEE)",
+    "Sujeet Kollure (ECE)",
+    "Syed Shoaib Akhtar (CSE)",
+  ];
+
+  const showAll = () => {
+    setVisibleCount(responsiblePersons.length);
+  };
+
+  const showLess = () => {
+    setVisibleCount(2);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,14 +103,14 @@ const Home = () => {
                     </h4>
                   </div>
                   <iframe
-                  title="Calander"
-                  src="https://calendar.google.com/calendar/embed?height=100&wkst=1&ctz=UTC&bgcolor=%23ffffff&showTitle=0&src=N2U0YTQyNDM4YmYzZTNmYTg4YmNhYTczY2RjMzQ0ZDYwNDAzMjcxNTAxOGViNzRhYjJiOTM3OTUxYTY2ZDM5MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%237CB342&color=%230B8043"
-                  className="googleCalender"
+                    title="Calander"
+                    src="https://calendar.google.com/calendar/embed?height=100&wkst=1&ctz=UTC&bgcolor=%23ffffff&showTitle=0&src=N2U0YTQyNDM4YmYzZTNmYTg4YmNhYTczY2RjMzQ0ZDYwNDAzMjcxNTAxOGViNzRhYjJiOTM3OTUxYTY2ZDM5MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%237CB342&color=%230B8043"
+                    className="googleCalender"
                     border="solid 1px #777"
                     width="100%"
                     height="100%"
                     frameborder="0"
-                    scrolling="no"
+                   
                   ></iframe>
                 </section>
 
@@ -116,13 +142,47 @@ const Home = () => {
                     easier. This website was created to provide a platform for
                     students to voice their concerns and suggestions.
                   </p>
+                  <h3 style={{ margin: "5px 0" }}>Z-Notes.in</h3>
+                  Design and Developed by :{" "}
+                  {isMobile && (
+                    <a
+                      href="https://zfolio.netlify.app/"
+                      style={{
+                        display: "block",
+                        textAlign:'center',
+                        marginTop: "5px",
+                      }}
+                    >
+                      <strong>Syed Zeeshan Patel</strong>{" "}
+                    </a>
+                  )}
+                  {!isMobile && (
+                  <a
+                    href="https://zfolio.netlify.app/"
+                    style={{ color: "green" }}
+                  >
+                    <strong>Syed Zeeshan Patel</strong>{" "}
+                  </a>)}
+                  <div className="responsible-persons">
+                    <h3 style={{ margin: "5px 0" }}>Responsible Persons : </h3>
+                    <ul className="responsible-list">
+                      {responsiblePersons
+                        .slice(0, visibleCount)
+                        .map((person, index) => (
+                          <li key={index}>{person}</li>
+                        ))}
 
-                  <h4>Z-Notes.in</h4>
-                  <ul>
-                    <li>Design and Developed by : Syed Zeeshan Patel</li>
-                    Responsible persons:
-                    <li>Basavakiran Bandi (CSE)</li>
-                  </ul>
+                      {visibleCount === 2 ? (
+                        <li className="view-all-btn" onClick={showAll} style={{border:'none'}}>
+                          <u> View All</u>
+                        </li>
+                      ) : (
+                        <li className="view-all-btn" onClick={showLess} style={{border:'none'}}>
+                          <u> Show Less</u>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
                 </section>
 
                 <section id="resources" className="subSection">
@@ -147,9 +207,9 @@ const Home = () => {
                   <p>
                     Have questions or need assistance? Feel free to reach out to
                     us via email at:
-                    <a href="mailto:znoteslaec@gmail.com">
+                    <a href="mailto:support@znotes.in">
                       {" "}
-                      znoteslaec@gmail.com
+                      support@znotes.in
                     </a>
                   </p>
                 </section>

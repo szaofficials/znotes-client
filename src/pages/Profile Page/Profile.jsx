@@ -22,7 +22,7 @@ const UserProfile = () => {
 
         <div className="profile-heading">
           <h2 style={{ color: "black", margin:"0" }}>{user.name}</h2>
-        <p>Role: {user.isAdmin ? "Admin" : "Student"}</p>
+        <p>Role: {user.isAdmin ? "Admin" : (user.role === 'subAdmin' ? "SubAdmin" : "Student")}</p>
         </div>
         <div className="profile-details">
         <table className="profile-table">
@@ -62,6 +62,10 @@ const UserProfile = () => {
               <tr>
                 <td><strong>Scheme:</strong></td>
                 <td>{user.scheme.scheme}</td>
+              </tr>
+              <tr>
+                <td><strong>College:</strong></td>
+                <td>{user.college.clgName}{" "}({user.college.clgCode})</td>
               </tr>
             </tbody>
           </table>

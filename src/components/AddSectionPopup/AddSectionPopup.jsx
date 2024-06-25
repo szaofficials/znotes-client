@@ -64,7 +64,7 @@ const AddSectionPopup = ({ onClose, subjectDetails, onAddSection, sectionToEdit,
 
       const res_data = await response.json();
 
-      console.log("updated section data", res_data.section);
+      // console.log("updated section data", res_data.section);
 
       if (response.ok) {
         Swal.fire({

@@ -27,8 +27,6 @@ const SubjectPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSections, setFilteredSections] = useState([]);
 
-
-
   useEffect(() => {
     let isMounted = true; // Flag to track component mount status
 
@@ -63,11 +61,10 @@ const SubjectPage = () => {
     };
   }, [subCode, API]);
 
-
   useEffect(() => {
     // Filter sections based on searchQuery
     if (subjectDetails) {
-      const filtered = subjectDetails.sections.filter(section =>
+      const filtered = subjectDetails.sections.filter((section) =>
         section.sectionName.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredSections(filtered);
@@ -77,7 +74,7 @@ const SubjectPage = () => {
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
-  
+
   const handleEditSubjectClick = () => {
     setShowEditSubjectPopup(true);
   };
@@ -148,7 +145,22 @@ const SubjectPage = () => {
   // };
 
   const handleAddPdf = (newPdf) => {
-    window.location.reload();
+    // window.location.reload();
+    if (sectionId) {
+      setSubjectDetails((prevDetails) => ({
+        ...prevDetails,
+        sections: prevDetails.sections.map((section) =>
+          section._id === sectionId
+            ? {
+                ...section,
+                pdfs: [...section.pdfs, newPdf],
+              }
+            : section
+        ),
+      }));
+    } else {
+      console.error("sectionId is undefined or null");
+    }
   };
 
   const handleDeletePdf = async (pdfId, sectionId) => {
@@ -299,7 +311,13 @@ const SubjectPage = () => {
       <div>
         <div className="SubjectPage">
           <div className="search-container">
-            <input type="text" id="searchInput" placeholder="What do you want ?" value={searchQuery} onChange={handleSearchInputChange}  />
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="What do you want ?"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            />
           </div>
           <div className="subjectContainer">
             <p>{subjectDetails.description}</p>
@@ -375,16 +393,18 @@ const SubjectPage = () => {
                       </AdminOnly>
                     </div>
                     <div className="sectionDesc">
-                      <p style={{ margin: "0 0 8px 0" }}>{section.sectionDesc}</p>
+                      <p style={{ margin: "0 0 8px 0" }}>
+                        {section.sectionDesc}
+                      </p>
                     </div>
                     <div className="pdf-container">
                       {/* Render PDFs if available for the section */}
                       {section.pdfs && section.pdfs.length > 0 ? (
-                        section.pdfs.map((pdf, pdfIndex) => (
+                        section.pdfs.map((pdf) => (
                           <div key={pdf._id} className="pdf-item">
                             {/* Render PDF title and description */}
                             <div className="pdfTitle">
-                            {pdf.pdfTitle && <h3>{pdf.pdfTitle}</h3>}
+                              {pdf.pdfTitle && <h3>{pdf.pdfTitle}</h3>}
                               <AdminOnly isAdmin={user.isAdmin}>
                                 <div className="edOptions">
                                   <FaTrash
@@ -399,7 +419,7 @@ const SubjectPage = () => {
 
                             <div className="pdf-viewer">
                               <iframe
-                                src={`${API}/uploads/${pdf.pdfFile}`}
+                                src={`https://storage.googleapis.com/znotes-uploads/${pdf.pdfFile}`}
                                 title={pdf.pdfTitle}
                               ></iframe>
                             </div>
@@ -425,7 +445,11 @@ const SubjectPage = () => {
                             </div>
                             <button
                               onClick={() =>
-                                navigate(`/pdfViewer/${pdf.pdfFile}`)
+                                navigate(
+                                  `/pdfViewer/${encodeURIComponent(
+                                    pdf.pdfFile
+                                  )}`
+                                )
                               }
                             >
                               View
@@ -445,7 +469,9 @@ const SubjectPage = () => {
                           No {section.sectionName} available yet.
                         </div>
                       )}
-                      <AdminOnly isAdmin={user.isAdmin}>
+                      <AdminOnly
+                        isAdmin={user.isAdmin || user.role === "subAdmin"}
+                      >
                         <div className="add-section">
                           <span className="plus-icon">
                             <FaPlus
@@ -474,7 +500,7 @@ const SubjectPage = () => {
               </div>
             )}
 
-            <AdminOnly isAdmin={user.isAdmin}>
+            <AdminOnly isAdmin={user.isAdmin || user.role === "subAdmin"}>
               <div className="add-section" onClick={handleAddSectionClick}>
                 <span className="plus-icon">
                   <FaPlus />

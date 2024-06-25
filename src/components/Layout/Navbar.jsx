@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link,NavLink, useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import "../Layout/Navbar.css"; // Import your CSS file
 import { useAuth } from "../../api/auth";
-import { FaUser, FaSignOutAlt, FaHome, FaPlus,FaBars } from "react-icons/fa";
+import { FaUser, FaSignOutAlt, FaHome, FaPlus, FaBars } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+import { PiStudentBold } from "react-icons/pi";
+
 import Avatar from "../Avatar";
 import AddSubjectPopup from "../AddSubjectPopup/AddSubjectPopup";
 import { toast } from "react-toastify";
@@ -96,56 +99,90 @@ const Navbar = () => {
 
   return (
     <>
-      {isMobile && <Sidebar  userData={userData}
-        subjects={subjects}
-        handleAddSubjectClick={handleAddSubjectClick}
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        isLoading={isLoading} 
-        />}
-      <nav className="navbar">
       {isMobile && (
+        <Sidebar
+          userData={userData}
+          subjects={subjects}
+          handleAddSubjectClick={handleAddSubjectClick}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          isLoading={isLoading}
+        />
+      )}
+      <nav className="navbar">
+        {isMobile && (
           <div className="navbar-burger" onClick={toggleSidebar}>
             <FaBars />
           </div>
         )}
-        {isMobile && <><div className="navbar-title">Z-Notes.in</div> {!isLoggedIn&& <div style={{width:'10px',height:'10px'}}></div>}</> }
-        {!isMobile && (
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            {userData && (
-              <Link
-                to={`/Home/${userData.department}/${userData.scheme}/${userData.semester}`}
-                className="nav-link"
-              >
-                <FaHome style={{ verticalAlign: "middle", fontSize: "30px" }} />
-              </Link>
+        {isMobile && (
+          <>
+            <div className="navbar-title">Z-Notes.in</div>{" "}
+            {!isLoggedIn && (
+              <div style={{ width: "10px", height: "10px" }}></div>
             )}
-          </li>
-          {isLoading ? ( // Check if subjects are still loading
-            <li className="nav-item">Loading...</li>
-          ) : subjects.length === 0 ? ( // Check if subjects array is empty
-            <li className="nav-item">No subjects available</li>
-          ) : (
-            subjects.map((subject, index) => (
-              <li className="nav-item" key={index}>
-                <NavLink
-                  to={`/Home/${userData.department}/${userData.scheme}/${userData.semester}/${subject.subCode}`}
+          </>
+        )}
+        {!isMobile && (
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              {userData && (
+                <Link
+                  to={`/Home/${userData.department}/${userData.scheme}/${userData.semester}`}
                   className="nav-link"
                 >
-                  {subject.subAbb}
-                </NavLink>
-                |
-              </li>
-            ))
-          )}
-          <AdminOnly isAdmin={user.isAdmin}>
-            <li className="nav-item" onClick={() => setIsPopupOpen(true)}>
-              <FaPlus style={{ verticalAlign: "middle", fontSize: "20px", cursor:'pointer' }} />
+                  <FaHome
+                    style={{ verticalAlign: "middle", fontSize: "30px" }}
+                  />
+                </Link>
+              )}
             </li>
-          </AdminOnly>
-        </ul>
-      )}
+            {isLoading ? ( // Check if subjects are still loading
+              <li className="nav-item">Loading...</li>
+            ) : subjects.length === 0 ? ( // Check if subjects array is empty
+              <li className="nav-item">No subjects available</li>
+            ) : (
+              subjects.map((subject, index) => (
+                <li className="nav-item" key={index}>
+                  <NavLink
+                    to={`/Home/${userData.department}/${userData.scheme}/${userData.semester}/${subject.subCode}`}
+                    className="nav-link"
+                  >
+                    {subject.subAbb}
+                  </NavLink>
+                  |
+                </li>
+              ))
+            )}
+
+            <AdminOnly isAdmin={user.isOwner}>
+              <li className="nav-item">
+                <Link to="/Admin/Dashboard" className="nav-link">
+                  <MdDashboard className="MdDashboard" />
+                  Dashboard
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <NavLink to={"/Admin/StudentsList"} className="nav-link">
+                  <PiStudentBold className="PiStudentBold" />
+                  All Students
+                </NavLink>
+              </li>
+            </AdminOnly>
+            <AdminOnly isAdmin={user.isAdmin}>
+              <li className="nav-item" onClick={() => setIsPopupOpen(true)}>
+                <FaPlus
+                  style={{
+                    verticalAlign: "middle",
+                    fontSize: "20px",
+                    cursor: "pointer",
+                  }}
+                />
+              </li>
+            </AdminOnly>
+          </ul>
+        )}
         {isPopupOpen && (
           <AddSubjectPopup
             onClick={handleAddSubjectClick}
@@ -156,22 +193,23 @@ const Navbar = () => {
 
         {isLoggedIn && (
           <div className="avatar-container" onClick={handleAvatarClick}>
-           <Avatar userId={user._id} size="35px" borderRadius="50%">
-        {user.name ? user.name.charAt(0).toUpperCase() : ""}
-      </Avatar>
+            <Avatar userId={user._id} size="35px" borderRadius="50%">
+              {user.name ? user.name.charAt(0).toUpperCase() : ""}
+            </Avatar>
             {isDropdownOpen && (
               <div className="dropdown-menu">
                 <button
                   onClick={() =>
                     navigate(`/Profile/${user.usn ? user.usn : ""}`)
                   }
-                  style={{   borderBottom:' 1px solid #fff'}}
+                  style={{ borderBottom: " 1px solid #fff" }}
                 >
-                  <FaUser style={{ verticalAlign: "top" }} />Profile
+                  <FaUser style={{ verticalAlign: "top" }} />
+                  Profile
                 </button>
 
                 <button onClick={handleLogout}>
-                  Logout <FaSignOutAlt style={{ verticalAlign: "middle"}} />{" "}
+                  Logout <FaSignOutAlt style={{ verticalAlign: "middle" }} />{" "}
                 </button>
               </div>
             )}

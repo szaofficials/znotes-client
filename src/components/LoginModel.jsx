@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../pages/Dss.css";
+import "../pages/Dss/Dss.css";
 import { useAuth } from "../api/auth";
 import { toast } from "react-toastify";
 import Spinner from "./Spinner";
