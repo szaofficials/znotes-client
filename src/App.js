@@ -94,15 +94,3 @@ const App = () => {
 export default App;
 
 
-{/* <Router>
-      <Switch>
-        <Route exact path="/admin/dashboard" component={DashboardPage} />
-        <Route exact path="/admin/users" component={UsersManagementPage} />
-        <Route exact path="/admin/subjects/add" component={AddSubjectPage} />
-        <Route exact path="/admin/notes" component={ManageNotesPage} />
-        <Route exact path="/admin/profile" component={ProfilePage} />
-      
-  
-        <Route component={NotFoundPage} />
-      </Switch>
-    </Router> */}
